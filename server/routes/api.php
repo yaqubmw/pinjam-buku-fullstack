@@ -4,8 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\BookController;
-use App\Http\Controllers\RentController;
-use App\Http\Controllers\ReturnBookController;
+use App\Http\Controllers\BookTransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,5 +23,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::apiResource('customers', CustomerController::class);
 Route::apiResource('books', BookController::class);
-Route::apiResource('rents', RentController::class);
-Route::apiResource('returnsbook', ReturnBookController::class);
+Route::apiResource('transactions', BookTransactionController::class);

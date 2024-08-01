@@ -11,21 +11,23 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::dropIfExists('rents');
+        Schema::create('book_transactions', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('customer_id')->constrained('customers')->onDelete('cascade');
+            $table->foreignId('book_id')->constrained('books')->onDelete('cascade');
+            $table->decimal('price', 10, 2);
+            $table->date('rent_date');
+            $table->date('return_date')->nullable();
+            $table->boolean('is_returned')->default(false);
+            $table->timestamps();
+        });
     }
-    
+
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::create('rents', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('customer_id')->constrained('customers')->onDelete('cascade');
-            $table->foreignId('book_id')->constrained('books')->onDelete('cascade');
-            $table->decimal('price', 12, 2);
-            $table->date('rent_date');
-            $table->timestamps();
-        });
+        Schema::dropIfExists('book_transactions');
     }
 };

@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ReturnBook extends Model
+class BookTransaction extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['customer_id', 'book_id', 'return_date'];
+    protected $fillable = ['customer_id', 'book_id', 'price', 'rent_date', 'return_date', 'is_returned'];
 }
