@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import { fontFamily } from "tailwindcss/defaultTheme";
 
 const config: Config = {
   content: [
@@ -8,13 +9,38 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-      },
+      fontFamily: {
+        sans: ["var(--font-poppins)", ...fontFamily.sans],
+      }
     },
   },
-  plugins: [],
+  plugins: [
+    require("@tailwindcss/forms"),
+
+    function ({ addUtilities }: any) {
+      // Adding custom utilities
+      const newUtilities = {
+        '.no-outline': {
+          '@apply focus:outline-none focus:ring-0': {},
+        },
+      };
+
+      addUtilities(newUtilities);
+
+      // Adding custom scrollbar styles
+      const newScrollbarUtilities = {
+        '.no-scrollbar::-webkit-scrollbar': {
+          display: 'none',
+        },
+        '.no-scrollbar': {
+          '-ms-overflow-style': 'none',
+          'scrollbar-width': 'none',
+        },
+      };
+
+      addUtilities(newScrollbarUtilities, ['responsive', 'hover']);
+    },
+
+  ],
 };
 export default config;
