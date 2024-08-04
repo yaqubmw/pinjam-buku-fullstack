@@ -10,10 +10,25 @@ class BookTransactionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return BookTransaction::all();
+    $page = $request->input('page');
+    $limit = $request->input('limit');
+    $sort = $request->input('sort', 'desc');
+
+    $query = BookTransaction::orderBy('id', $sort);
+
+    if ($page && $limit) {
+        $transactions = $query
+            ->skip(($page - 1) * $limit)
+            ->take($limit)
+            ->get();
+    } else {
+        $transactions = $query->get();
     }
+
+    return response()->json($transactions);
+}
 
     /**
      * Store a newly created resource in storage.

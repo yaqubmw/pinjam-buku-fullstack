@@ -12,7 +12,7 @@ class BookController extends Controller
      */
     public function index()
     {
-        return Book::all();
+        return Book::orderBy('id', 'desc')->get();
     }
 
     /**

@@ -1,4 +1,3 @@
-// store/types.ts
 export interface Customer {
     id: number;
     membership_number: string;

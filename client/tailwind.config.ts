@@ -18,7 +18,7 @@ const config: Config = {
     require("@tailwindcss/forms"),
 
     function ({ addUtilities }: any) {
-      // Adding custom utilities
+
       const newUtilities = {
         '.no-outline': {
           '@apply focus:outline-none focus:ring-0': {},
@@ -27,7 +27,7 @@ const config: Config = {
 
       addUtilities(newUtilities);
 
-      // Adding custom scrollbar styles
+
       const newScrollbarUtilities = {
         '.no-scrollbar::-webkit-scrollbar': {
           display: 'none',

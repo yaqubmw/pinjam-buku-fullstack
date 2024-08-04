@@ -8,9 +8,9 @@ interface TxCardProps {
 }
 
 const TxCard = ({ transaction, customer, book }: TxCardProps) => {
-  const { price, rent_date, return_date, is_returned } = transaction;
-  const { name, membership_number, birth_date } = customer || {};
-  const { title, publisher, page_count, stock } = book || {};
+  const { price, rent_date, is_returned } = transaction;
+  const { name, membership_number } = customer || {};
+  const { title } = book || {};
 
   const formatDate = (date?: string) => {
     if (!date) {
@@ -24,14 +24,11 @@ const TxCard = ({ transaction, customer, book }: TxCardProps) => {
     });
   };
 
-  // console.log("book", book);
-  // console.log("customer", customer);
-
   return (
-    <Link href={`/kembalikan/${transaction.id}`}>
-      <div className="flex flex-col gap-4 p-4">
-        <div className="flex flex-col">
-          <div className="flex flex-col gap-1">
+    <Link href={`/return/${transaction.id}`} className="w-full">
+      <div className="w-full flex flex-col gap-4 p-4">
+        <div className="w-full flex flex-col">
+          <div className="w-full flex flex-col gap-1">
             <span className="font-semibold">Peminjam: </span>
             <span>{name}</span>
           </div>

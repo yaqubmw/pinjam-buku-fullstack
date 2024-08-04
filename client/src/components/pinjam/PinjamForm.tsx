@@ -12,6 +12,7 @@ import { Select } from "../forms/Select";
 import { ErrorMessage } from "../forms/ErrorMessage";
 import { NumericInput } from "../forms/NumericInput";
 import Button from "../Button";
+import { Loading } from "../loading";
 
 export type FormData = {
   customer_id: number | null;
@@ -23,7 +24,7 @@ export type FormData = {
 const PinjamForm: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
 
-  // Fetching customers and books from the store
+  
   const customers = useSelector(
     (state: RootState) => state.customers
   ) as Customer[];
@@ -32,7 +33,7 @@ const PinjamForm: React.FC = () => {
   const [currentDate, setCurrentDate] = useState("");
 
   useEffect(() => {
-    const today = new Date().toISOString().split("T")[0]; // Format as YYYY-MM-DD
+    const today = new Date().toISOString().split("T")[0]; 
     setCurrentDate(today);
     dispatch(fetchCustomers());
     dispatch(fetchBooks());
@@ -44,7 +45,7 @@ const PinjamForm: React.FC = () => {
     year: "numeric",
   });
 
-  // Setting up useForm hook
+  
   const methods = useForm<FormData>({
     defaultValues: {
       customer_id: null,
@@ -62,9 +63,9 @@ const PinjamForm: React.FC = () => {
     reset,
   } = methods;
 
-  // Loading state check
+  
   if (!customers || !books) {
-    return <div>Loading...</div>;
+    return <Loading />
   }
 
   const onSubmit = async (data: FormData) => {
@@ -76,10 +77,14 @@ const PinjamForm: React.FC = () => {
         rent_date: currentDate,
       });
 
-      const book = books.find((book) => book.id === data.book_id);
+      const book = books.find((book) => book.id === Number(data.book_id));
       if (book) {
-        book.stock -= 1;
-        await axios.put(`/api/books/${data.book_id}`, { stock: book.stock });
+        const updateBookResponse = await axios.put(`/api/books/${book.id}`, {
+          title: book.title,
+          publisher: book.publisher,
+          page_count: book.page_count,
+          stock: book.stock ? book.stock - 1 : 0,
+        });
       }
 
       reset({
@@ -94,7 +99,7 @@ const PinjamForm: React.FC = () => {
   };
 
   return (
-    <div className="w-full max-w-[24rem] p-8 bg-white flex items-center justify-center rounded-lg shadow-xl">
+    <div className="w-full max-w-[24rem] p-8 bg-white shadow flex items-center justify-center rounded-lg">
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-80">
           <div className="flex flex-col gap-4">

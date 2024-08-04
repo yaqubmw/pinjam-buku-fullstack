@@ -1,9 +1,17 @@
+import Link from "next/link";
+import Container from "src/components/Container";
+import { MenuHome } from "src/components/home/MenuHome";
+import { TitleHome } from "src/components/home/TitleHome";
+
 const Home: React.FC = () => {
   return (
-    <div className="flex flex-col min-h-screen items-center justify-center">
-      <h1>Home</h1>
-    </div>
+    <Container>
+      <div className="flex flex-col items-center justify-center h-full w-full gap-6 lg:gap-8">
+        <TitleHome />
+        <MenuHome />
+      </div>
+    </Container>
   );
-}
+};
 
-export default Home
+export default Home;

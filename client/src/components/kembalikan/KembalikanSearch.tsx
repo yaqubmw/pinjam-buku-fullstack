@@ -7,7 +7,7 @@ import { Select } from "../forms/Select";
 import { AppDispatch, RootState } from "store";
 import { Book, Customer, Transaction } from "store/types";
 import { useForm, FormProvider } from "react-hook-form";
-import TxCard from "./TxCard";
+import TxCard from "../TxCard";
 import Link from "next/link";
 
 const KembalikanSearch = () => {
@@ -34,7 +34,9 @@ const KembalikanSearch = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    let filtered = transactions;
+    let filtered = transactions.filter((transaction) => {
+      return transaction.is_returned === false;
+    });
 
     if (selectedCustomerId) {
       filtered = filtered.filter(
@@ -59,14 +61,10 @@ const KembalikanSearch = () => {
   const getBookById = (bookId: number) => {
     const book = books.find((book) => book.id === bookId);
     return book;
-  };
-
-  //   console.log("filteredTransactions", filteredTransactions);
-  //   console.log("selectedCustomerId", selectedCustomerId);
-  //   console.log("selectedBookId", selectedBookId);
+  };  
 
   return (
-    <div className="w-full min-w-[24rem] max-w-5xl p-8 bg-white flex flex-col items-center justify-center rounded-lg shadow-xl">
+    <div className="w-full min-w-[24rem] max-w-5xl p-8 bg-white shadow flex flex-col items-center justify-center rounded-lg">
       <FormProvider {...methods}>
         <form className="w-full min-w-80 max-w-5xl py-4 flex items-center justify-center">
           <div
@@ -103,14 +101,14 @@ const KembalikanSearch = () => {
         <div id="horizontal-line" className="w-full h-0.5 bg-indigo-300"></div>
         <div
           id="transaction-section"
-          className="py-4 grid grid-cols-1 md:grid-cols-2 auto-rows-fr gap-4"
+          className="py-4 grid grid-cols-1 md:grid-cols-2 auto-rows-fr gap-4 w-full"
         >
           {filteredTransactions.length > 0 ? (
             filteredTransactions.map((transaction) => (
               <Link
                 href={`/kembalikan/${transaction.id}`}
                 key={transaction.id}
-                className="col-span-1 shadow-md border border-indigo-300"
+                className="col-span-1 border border-indigo-300 w-full bg-white hover:bg-indigo-50 duration-300"
               >
                 <div id="transaction-item">
                   <TxCard

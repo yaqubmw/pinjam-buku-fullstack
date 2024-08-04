@@ -61,12 +61,9 @@ const TxDetails = ({ transaction, customer, book }: TxDetailsProps) => {
     }
   };
 
-  //   console.log("book", book);
-  //   console.log("customer", customer);
-
   return (
-    <div className="w-full max-w-3xl grid grid-cols-1 md:grid-cols-2 gap-6 px-4 py-12 rounded-md shadow-md shadow-indigo-300 bg-white">
-      <div className="col-span-1 flex flex-col gap-4">
+    <div className="w-full max-w-3xl grid grid-cols-1 md:grid-cols-2 gap-6 px-4 py-12 rounded-md bg-white shadow">
+      <div className="col-span-1 flex flex-col gap-4 border border-indigo-300 p-4">
         <div className="flex flex-col">
           <span className="font-semibold">Nomor Anggota: </span>
           <span>{membership_number?.toString()}</span>
@@ -80,7 +77,7 @@ const TxDetails = ({ transaction, customer, book }: TxDetailsProps) => {
           <span>{formatDate(birth_date)}</span>
         </div>
       </div>
-      <div className="col-span-1 flex flex-col gap-2">
+      <div className="col-span-1 flex flex-col gap-2 border border-indigo-300 p-4">
         <div className="flex flex-col">
           <span className="font-semibold">Judul Buku: </span>
           <span>{title}</span>
@@ -99,7 +96,7 @@ const TxDetails = ({ transaction, customer, book }: TxDetailsProps) => {
         </div>
       </div>
 
-      <div className="col-span-1 md:col-span-2 flex flex-col gap-3">
+      <div className="col-span-1 md:col-span-2 flex flex-col gap-3 border border-indigo-300 p-4">
         <div className="flex flex-wrap justify-evenly items-center">
           <div className="flex flex-col gap-4">
             <div className="flex flex-col">
