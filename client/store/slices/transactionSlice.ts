@@ -1,35 +1,32 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { submitTransaction } from './actions';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
+import { Transaction } from 'store/types';
 
-interface TransactionsState {
-    loading: boolean;
-    error: string | null;
-}
+export const fetchTransactions = createAsyncThunk<Transaction[]>('transactions/fetchTransactions', async () => {
+    const response = await axios.get('/api/transactions');
+    return response.data;
+});
 
-const initialState: TransactionsState = {
-    loading: false,
-    error: null,
-};
-
-const transactionsSlice = createSlice({
+const transactionSlice = createSlice({
     name: 'transactions',
-    initialState,
+    initialState: {
+        transactions: [] as Transaction[],
+        status: 'idle',
+    },
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(submitTransaction.pending, (state) => {
-                state.loading = true;
-                state.error = null;
+            .addCase(fetchTransactions.pending, (state) => {
+                state.status = 'loading';
             })
-            .addCase(submitTransaction.fulfilled, (state) => {
-                state.loading = false;
+            .addCase(fetchTransactions.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                state.transactions = action.payload;
             })
-            .addCase(submitTransaction.rejected, (state, action) => {
-                state.loading = false;
-                state.error = action.payload as string;
+            .addCase(fetchTransactions.rejected, (state, action) => {
+                state.status = 'failed';
             });
     },
 });
 
-const TransactionsReducer = transactionsSlice.reducer;
-export default TransactionsReducer;
+export default transactionSlice.reducer;

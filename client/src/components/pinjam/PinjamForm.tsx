@@ -14,9 +14,9 @@ import { NumericInput } from "../forms/NumericInput";
 import Button from "../Button";
 
 export type FormData = {
-  customer_id: string;
-  book_id: string;
-  price: number;
+  customer_id: number | null;
+  book_id: number | null;
+  price: number | null;
   rent_date: string;
 };
 
@@ -47,9 +47,9 @@ const PinjamForm: React.FC = () => {
   // Setting up useForm hook
   const methods = useForm<FormData>({
     defaultValues: {
-      customer_id: "",
-      book_id: "",
-      price: undefined,
+      customer_id: null,
+      book_id: null,
+      price: null,
       rent_date: currentDate,
     },
     mode: "all",
@@ -83,9 +83,9 @@ const PinjamForm: React.FC = () => {
       }
 
       reset({
-        customer_id: "",
-        book_id: "",
-        price: undefined,
+        customer_id: null,
+        book_id: null,
+        price: null,
         rent_date: currentDate,
       });
     } catch (error) {
@@ -94,79 +94,81 @@ const PinjamForm: React.FC = () => {
   };
 
   return (
-    <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-80">
-        <div className="flex flex-col gap-4">
-          {/* Input customer */}
-          <InputWrapper outerClassName="flex-col">
-            <Label id="customer_id">Nama Peminjam</Label>
-            <Select
-              id="customer_id"
-              name="customer_id"
-              options={customers.map((customer) => ({
-                key: customer.id,
-                value: customer.id,
-                optionLabel: customer.name,
-              }))}
-              placeholder="Pilih Anggota"
-              rules={{ required: "Nama Anggota harus diisi" }}
-            />
-            {errors.customer_id?.message && (
-              <ErrorMessage>{errors.customer_id.message}</ErrorMessage>
-            )}
-          </InputWrapper>
+    <div className="w-full max-w-[24rem] p-8 bg-white flex items-center justify-center rounded-lg shadow-xl">
+      <FormProvider {...methods}>
+        <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-80">
+          <div className="flex flex-col gap-4">
+            {/* Input customer */}
+            <InputWrapper outerClassName="flex-col">
+              <Label id="customer_id">Nama Peminjam</Label>
+              <Select
+                id="customer_id"
+                name="customer_id"
+                options={customers.map((customer) => ({
+                  key: customer.id,
+                  value: customer.id,
+                  optionLabel: customer.name,
+                }))}
+                placeholder="Pilih Anggota"
+                rules={{ required: "Nama Anggota harus diisi" }}
+              />
+              {errors.customer_id?.message && (
+                <ErrorMessage>{errors.customer_id.message}</ErrorMessage>
+              )}
+            </InputWrapper>
 
-          {/* Input book */}
-          <InputWrapper outerClassName="flex-col">
-            <Label id="book_id">Judul Buku</Label>
-            <Select
-              id="book_id"
-              name="book_id"
-              options={books.map((book) => ({
-                key: book.id,
-                value: book.id,
-                optionLabel: book.title,
-              }))}
-              placeholder="Pilih Buku"
-              rules={{ required: "Judul Buku harus diisi" }}
-            />
-            {errors.book_id?.message && (
-              <ErrorMessage>{errors.book_id.message}</ErrorMessage>
-            )}
-          </InputWrapper>
+            {/* Input book */}
+            <InputWrapper outerClassName="flex-col">
+              <Label id="book_id">Judul Buku</Label>
+              <Select
+                id="book_id"
+                name="book_id"
+                options={books.map((book) => ({
+                  key: book.id,
+                  value: book.id,
+                  optionLabel: book.title,
+                }))}
+                placeholder="Pilih Buku"
+                rules={{ required: "Judul Buku harus diisi" }}
+              />
+              {errors.book_id?.message && (
+                <ErrorMessage>{errors.book_id.message}</ErrorMessage>
+              )}
+            </InputWrapper>
 
-          {/* Input price */}
-          <InputWrapper outerClassName="flex-col">
-            <Label id="price">Harga</Label>
-            <NumericInput
-              id="price"
-              name="price"
-              placeholder="Enter price"
-              rules={{
-                required: "Harga harus diisi",
-                min: { value: 1000, message: "Harga harus lebih dari 1000" },
-              }}
-            />
-            {errors.price?.message && (
-              <ErrorMessage>{errors.price?.message}</ErrorMessage>
-            )}
-          </InputWrapper>
+            {/* Input price */}
+            <InputWrapper outerClassName="flex-col">
+              <Label id="price">Harga</Label>
+              <NumericInput
+                id="price"
+                name="price"
+                placeholder="Enter price"
+                rules={{
+                  required: "Harga harus diisi",
+                  min: { value: 1000, message: "Harga harus lebih dari 1000" },
+                }}
+              />
+              {errors.price?.message && (
+                <ErrorMessage>{errors.price?.message}</ErrorMessage>
+              )}
+            </InputWrapper>
 
-          {/* Display current date */}
-          <InputWrapper outerClassName="flex-col">
-            <Label id="rent_date">Tanggal Pinjam</Label>
-            <p>
-              <span>{displayCurrentDate}</span> (Hari ini)
-            </p>
-          </InputWrapper>
+            {/* Display current date */}
+            <InputWrapper outerClassName="flex-col">
+              <Label id="rent_date">Tanggal Pinjam</Label>
+              <p>
+                <span>{displayCurrentDate}</span> (Hari ini)
+              </p>
+            </InputWrapper>
 
-          {/* Submit button */}
-          <Button type="submit" disabled={!isValid}>
-            Pinjam Buku
-          </Button>
-        </div>
-      </form>
-    </FormProvider>
+            {/* Submit button */}
+            <Button type="submit" disabled={!isValid}>
+              Pinjam Buku
+            </Button>
+          </div>
+        </form>
+      </FormProvider>
+    </div>
   );
 };
 

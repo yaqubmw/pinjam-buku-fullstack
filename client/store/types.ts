@@ -1,15 +1,25 @@
 // store/types.ts
 export interface Customer {
-    id: string;
-    membershipNumber: string;
+    id: number;
+    membership_number: string;
     name: string;
-    birthDate: string;
+    birth_date: string;
 }
 
 export interface Book {
-    id: string;
+    id: number;
     title: string;
     publisher: string;
-    pageCount: number;
+    page_count: number;
     stock: number;
+}
+
+export interface Transaction {
+    id: number;
+    customer_id: number;
+    book_id: number;
+    price: number;
+    rent_date: string;
+    return_date: string;
+    is_returned: boolean;
 }

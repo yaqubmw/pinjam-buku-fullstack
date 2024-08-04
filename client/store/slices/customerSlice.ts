@@ -15,6 +15,12 @@ const customerSlice = createSlice({
         builder.addCase(fetchCustomers.fulfilled, (state, action) => {
             return action.payload;
         });
+        builder.addCase(fetchCustomers.rejected, (state, action) => {
+            return [];
+        });
+        builder.addCase(fetchCustomers.pending, (state) => {
+            return [];
+        });
     },
 });
 

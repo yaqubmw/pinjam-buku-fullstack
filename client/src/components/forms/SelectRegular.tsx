@@ -1,5 +1,3 @@
-import { useFormContext } from "react-hook-form";
-
 export interface OptionProps {
   key: any;
   value: any;
@@ -11,27 +9,24 @@ export type SelectProps = {
   name: string;
   options: OptionProps[];
   width?: string;
-  rules?: Record<string, any>;
   placeholder?: string;
   onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   disabled?: boolean;
 };
 
-export const Select: React.FC<SelectProps> = ({
+export const SelectRegular: React.FC<SelectProps> = ({
   id,
   name,
   options,
-  rules = {},
   width = "w-full",
   placeholder = "Select",
   onChange,
   disabled = false,
 }) => {
-  const { register } = useFormContext();
   return (
     <select
-      {...register(name, rules)}
       id={id}
+      name={name}
       className={`${width} block form-select duration-300 border-gray-300 bg-white text-sm text-gray-700 rounded-md shadow no-outline no-scrollbar focus:shadow-indigo-300`}
       onChange={onChange}
       disabled={disabled}

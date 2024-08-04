@@ -15,6 +15,12 @@ const bookSlice = createSlice({
         builder.addCase(fetchBooks.fulfilled, (state, action) => {
             return action.payload;
         });
+        builder.addCase(fetchBooks.rejected, (state, action) => {
+            return [];
+        });
+        builder.addCase(fetchBooks.pending, (state) => {
+            return [];
+        });
     },
 });
 
