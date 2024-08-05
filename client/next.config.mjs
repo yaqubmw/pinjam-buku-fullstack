@@ -6,7 +6,7 @@ const nextConfig = {
       fallback: [
         {
           source: "/api/:path*",
-          destination: "http://localhost:8000/api/:path*",
+          destination: `${String(process.env.SERVER_URL) || "http://localhost:8000"}/api/:path*`
         },
       ],
     };
